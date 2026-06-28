@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    {% block styles %}{% endblock %}
+    <title>Fale</title>
+</head>
+<body>
+
+    <header class="head-section" >
+        <nav class="navegation">
+
+            <div class="logo">
+                <a href="{{ url_for('index') }}">FaLe</a>
+            </div>
+            <ul class="nav-section">
+                <li><a href="{{ url_for('index') }}">INICIO</a></li>
+                <li><a href="#">CUENTAS</a></li>
+                <li><a href="#">ANOTACIONES</a></li>
+                <li><a href="#">INICIAR SESION</a></li>
+                <li><a href="#">REGISTRARSE</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero-content">
+            <h1 class="title-principal">Bienvenido de Nuevo</h1>
+            <p class="subtitulo">Inicia sesion para continuar</p>
+        </div>
+    </header>
+{% block content %}
+
+{% endblock %}
+
+    <button class="btn-calculadora" onclick="abrirCalculadora()" title="Abrir Calculadora">
+         <i class="fa-solid fa-calculator"></i>
+    </button>
+    <div class="calc-container">
+        <p>Calculadora</p>
+        <button class="btn-cerrar" onclick="cerrarCalculadora()">&times;</button>
+        <form method="POST" class="form-calc" id="form-calculadora">
+
+            <input type="hidden" name="n" id="n">
+            <input type="hidden" name="n2" id="n2">
+            <input type="hidden" name="operacion" id="operacion">
+
+            <input type="text" class="display" id="pantalla" readonly placeholder="0">
+
+            <div class="teclado">
+                <button type="button" class="btn-clear" onclick="limpiar()">C</button>
+                <button type="button" class="btn-delete" onclick="borrar('Borrar')">AC</button>
+                <button type="button" class="btn-op" onclick="seleccionarOperacion('division')">/</button>
+                <button type="button" onclick="agregarNumero('7')">7</button>
+                <button type="button" onclick="agregarNumero('8')">8</button>
+                <button type="button" onclick="agregarNumero('9')">9</button>
+                
+
+                <button type="button" class="btn-op" onclick="seleccionarOperacion('resta')">-</button>
+                <button type="button" onclick="agregarNumero('4')">4</button>
+                <button type="button" onclick="agregarNumero('5')">5</button>
+                <button type="button" onclick="agregarNumero('6')">6</button>
+                <button type="button" class="btn-op" onclick="seleccionarOperacion('multiplicacion')">*</button>
+                <button type="button" onclick="agregarNumero('1')">1</button>
+
+                <button type="button" onclick="agregarNumero('2')">2</button>
+                <button type="button" onclick="agregarNumero('3')">3</button>
+                <button type="button" class="btn-op" onclick="seleccionarOperacion('suma')">+</button>
+
+                <button type="button" onclick="agregarNumero('.')">.</button>
+                <button type="button" onclick="agregarNumero('0')">0</button>
+                
+
+                <button type="button" class="btn-equal" onclick="enviarCalculo()">=</button> 
+
+            </div>
+        </form>
+        {% if resultado is not none %}
+            <div class="res">Resultado: {{ resultado }}</div>
+            <input type="hidden" id="jinja-resultado" value="{{ resultado }}">
+        {% endif %}
+
+        {% if error %}
+            <div class="err">Error: {{ error }}</div>
+            <input type="hidden" id="jinja-error" value="true">
+        {% endif %}
+    </div>
+    <footer class="footer-section">
+        <div class="footer-top">
+            <div class="logo-footer">
+                <a href="{{ url_for('index') }}">FaLe</a>
+            </div>
+            <div class="section-information">
+                <div class="services">
+                    <ul>
+                        <li><a href="#">Contactos</a></li>
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Terminos y Condiciones</a></li>
+                    </ul>
+                </div>
+
+                <!-- Redes Sociales -->
+                <div class="services">
+                    <h3>Siguenos</h3>
+                    <div class="redes-sociales">
+                        <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                        <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                        <a href="#" title="Twitter"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 FaLe.</p>
+        </div>
+
+    </footer>
+
+    
+    <script src="{{ url_for('static', filename='js/calcular.js') }}"></script>
+</body>
+</html>

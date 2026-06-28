@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+
+  base-datos:
+    image: mysql:8.0
+    container_name: fale_mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password_seguro
+      - MYSQL_DATABASE=fale_db
+      - MYSQL_USER=usuario_fale
+      - MYSQL_PASSWORD=password_seguro_fale
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - red-fale
+    restart: always
+  
+  backend-api:
+    build: ./backend
+    container_name: fale_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://usuario_fale:password_seguro_fale@base-datos:3306/fale_db
+    depends_on:
+      - base-datos
+    networks:
+      - red-fale
+    restart: always
+  
+  frontend-web:
+    build: ./frontend
+    container_name: fale_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    depends_on:
+      - backend-api
+    networks:
+      - red-fale
+    restart: always
+
+networks:
+  red-fale:
+    driver: bridge
+
+volumes:
+  mysql_data:

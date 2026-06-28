@@ -1,0 +1,23 @@
+import os
+from flask import Flask
+from modelos import db
+
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL',
+    'sqlite:///database.db' 
+)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
+with app.app_context():
+    try:
+        db.create_all()
+        print("Base de datos conectada y tablas verificadas")
+    except Exception as e:
+        print("Aviso: MySQL aun no esta iniciando, el backend reintentara")
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
