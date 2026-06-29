@@ -21,14 +21,9 @@
                 <li><a href="#">CUENTAS</a></li>
                 <li><a href="#">ANOTACIONES</a></li>
                 <li><a href="#">INICIAR SESION</a></li>
-                <li><a href="#">REGISTRARSE</a></li>
+                <li><a href="{{ url_for('register') }}">REGISTRARSE</a></li>
             </ul>
         </nav>
-
-        <div class="hero-content">
-            <h1 class="title-principal">Bienvenido de Nuevo</h1>
-            <p class="subtitulo">Inicia sesion para continuar</p>
-        </div>
     </header>
 {% block content %}
 
@@ -120,6 +115,6 @@
     </footer>
 
     
-    <script src="{{ url_for('static', filename='js/calcular.js') }}?v=2.2"></script>
+    <script src="{{ url_for('static', filename='js/calcular.js') }}"></script>
 </body>
 </html>
