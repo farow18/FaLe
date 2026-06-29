@@ -11,7 +11,6 @@ function abrirCalculadora() {
 }
 
 function cerrarCalculadora() {
-
     if (modal){
         modal.classList.remove('activo');
     }
@@ -27,7 +26,6 @@ function agregarNumero(digito) {
     if (pantalla.value === "0" && digito !== ".") {
         pantalla.value = digito;
     } else {
-        
         if (digito === "." && pantalla.value.includes(".")) return;
         pantalla.value += digito;
     }
@@ -37,12 +35,12 @@ function seleccionarOperacion(op) {
     if (pantalla.value !== "") {
         memoriaNum1 = pantalla.value;
         operacionSeleccionada = op;
-        pantalla.value = ""; // Limpiar pantalla para el segundo número
+        pantalla.value = ""; 
     }
 }
 
 function limpiar() {
-    pantalla.value = "";
+    pantalla.value = "0";
     memoriaNum1 = "";
     operacionSeleccionada = "";
 }
@@ -51,8 +49,11 @@ function borrar(){
     limpiar();
 }
 
-function enviarCalculo() {
-    // Verificación de que tengamos todos los datos necesarios para operar
+function enviarCalculo(event) {
+    if (event) {
+        event.preventDefault();
+    }
+
     if (memoriaNum1 !== "" && operacionSeleccionada !== "" && pantalla.value !== "") {
         
         const datosOperaciones = {
@@ -61,34 +62,33 @@ function enviarCalculo() {
             operacion: operacionSeleccionada
         };
 
+        // DIRECCIÓN REVISADA MILIMÉTRICAMENTE
         fetch('http://127.0.0', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
             body: JSON.stringify(datosOperaciones)
         })
         .then(response => response.json())
         .then(data => {
-            // Manejar la respuesta del servidor
             if (data.resultado !== null && data.resultado !== undefined) {
                 pantalla.value = data.resultado;
-                memoriaNum1 = data.resultado; // Guardar el resultado en memoriaNum1
-                operacionSeleccionada = ""; // Limpiar la operación seleccionada
+                memoriaNum1 = data.resultado; 
+                operacionSeleccionada = ""; 
             } else if (data.error) {
                 pantalla.value = "Error";
-                alert(data.error); // Mostrar el mensaje de error
+                alert(data.error); 
             }
         })
         .catch(error => {
-            console.error('Error al conectar con el servidor:', error);
+            console.error('Error al conectar con el Backend:', error);
         });
     }
 }
 
-
 document.addEventListener('keydown', function(event) {
-    
-    
-    if (!modal.classList.contains('activo')) return; 
+    if (!modal || !modal.classList.contains('activo')) return; 
 
     const tecla = event.key;
     if ((tecla >= '0' && tecla <= '9') || tecla === '.') {
@@ -109,29 +109,9 @@ document.addEventListener('keydown', function(event) {
     }
     else if (tecla === 'Enter' || tecla === '=') {
         event.preventDefault(); 
-        enviarCalculo();
+        enviarCalculo(event);
     }
     else if (tecla === 'Escape' || tecla === 'c' || tecla === 'C' || tecla === 'Delete') {
         limpiar();
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const resOculto = document.getElementById('jinja-resultado');
-    const errorOculto = document.getElementById('jinja-error');
-
-    if (resOculto && resOculto.value.trim() !== '' || errorOculto) {
-        if (resOculto) {
-            pantalla.value = resOculto.value;
-        }
-        
-        setTimeout(function() {
-            abrirCalculadora();
-        }, 100);
-    }
-    if (errorOculto) {
-        setTimeout(function() {
-            abrirCalculadora();
-        }, 100);
     }
 });

@@ -72,7 +72,7 @@
                 <button type="button" onclick="agregarNumero('0')">0</button>
                 
 
-                <button type="button" class="btn-equal" onclick="enviarCalculo()">=</button> 
+                <button type="button" class="btn-equal" onclick="enviarCalculo(event)">=</button> 
 
             </div>
         </form>
@@ -120,6 +120,6 @@
     </footer>
 
     
-    <script src="{{ url_for('static', filename='js/calcular.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/calcular.js') }}?v=2.2"></script>
 </body>
 </html>

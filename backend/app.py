@@ -1,8 +1,11 @@
 import os
 from flask import Flask
+from flask_cors import CORS
 from modelos import db
 
 app = Flask(__name__)
+
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL',
