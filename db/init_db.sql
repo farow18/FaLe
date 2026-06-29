@@ -1,0 +1,15 @@
+
+CREATE DATABASE IF NOT EXISTS fale_db;
+USE fale_db;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(60) NOT NULL UNIQUE,
+    nombre VARCHAR(60) NOT NULL,
+    apellido VARCHAR(60) NOT NULL,
+    email VARCHAR (150) NOT NULL,
+    password_fale VARCHAR(250) NOT NULL,
+    edad INT NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+

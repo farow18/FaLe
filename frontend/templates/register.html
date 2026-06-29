@@ -1,0 +1,48 @@
+
+{% extends 'base.html'%}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="register-container">
+
+    <div id="msg-alerta" class="alert-box"></div>
+    
+    <form id="form-registro" class="alert-box">
+
+        <div class="form-group full-width">
+            <label for="reg-usuario">Nombre de usuario:</label>
+            <input type="text" id="reg-usuario" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-nombre">Nombre:</label>
+            <input type="text" id="reg-nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-apellido">Apellido:</label>
+            <input type="text" id="reg-apellido" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-edad">Edad:</label>
+            <input type="text" id="reg-edad" min="1" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-email">Correo Electrónico:</label>
+            <input type="text" id="reg-email" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-password">Contraseña:</label>
+            <input type="text" id="reg-password" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Resgistrarme</button>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
