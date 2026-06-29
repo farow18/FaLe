@@ -68,7 +68,7 @@ function enviarCalculo(event) {
             headers: { 
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify(datosOperaciones)
+            body: JSON.stringify(datosOpereraciones)
         })
         .then(response => response.json())
         .then(data => {
